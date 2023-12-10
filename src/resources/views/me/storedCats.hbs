@@ -1,0 +1,71 @@
+<div class="mt-4">
+    <h3>Thông tin mèo đã thêm</h3>
+
+    <table class="table mt-4">
+        <thead>
+            <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Tên mèo</th>
+            <th scope="col">Thời gian thêm</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each Cats}}
+            <tr>
+            <th scope="row">{{sum @index 1}}</th>
+            <td>{{this.name}}</td>
+            <td>{{this.createdAt}}</td>
+            <td>
+                <a href="/cat/{{this._id}}/edit" class="btn btn-dark">Sửa</a>
+                {{!-- them 'data-toggle="modal" data-target="#exampleModal" ' de hien thi lua chon khi an nut --}}
+                <a href="" data-toggle="modal" data-id="{{this._id}}" data-target="#deleteCat" class="btn btn-dark">Xóa</a>
+            </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+{{!-- form delete ẩn --}}
+<form name="delete-cat-form" method="post"></form>
+
+{{!-- xac nhan xoa hay khong --}}
+<div id="deleteCat" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Xác nhận</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn có chắc chắn muốn xóa dữ liệu này không?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Hủy</button>
+        <button id="btn-deleteCat" type="button" class="btn btn-danger" data-id="{{this._id}}">Xác nhận</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var catId;
+        var deleteForm = document.forms['delete-cat-form']
+        var btnDeleteCat = document.getElementById('btn-deleteCat')
+
+        $('#deleteCat').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            catId = button.data('id');
+    });
+
+    btnDeleteCat.onclick = function() {
+    deleteForm.action = '/cat/' + catId + '?_method=delete';
+    deleteForm.submit(); // Gửi yêu cầu xóa khi người dùng xác nhận
+}
+
+});
+</script>

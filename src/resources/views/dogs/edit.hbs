@@ -1,0 +1,16 @@
+<div class="mt-4">
+    <h3>Thêm thông tin chó</h3>
+    <form method="post" action="/dog/{{Dog._id}}?_method=put">
+        <div class="form-group">
+            <label for="name">Tên chó</label>
+            <input type="text" class="form-control" value="{{Dog.name}}" id="name" placeholder="Tên chó" name="name">
+        </div><div class="form-group">
+            <label for="image">Ảnh</label>
+            <input type="text" class="form-control" value="{{Dog.image}}" id="image" placeholder="link ảnh" name="image">
+        </div><div class="form-group">
+            <label for="description">Thông tin</label>
+            <textarea class="form-control" id="description" placeholder="Thông tin" name="description">{{Dog.description}}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Lưu lại</button>
+    </form>
+</div>
